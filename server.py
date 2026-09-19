@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request
+"""Flask server for the emotion detection application."""
+
+from flask import Flask, request
 from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask(__name__)
@@ -6,6 +8,7 @@ app = Flask(__name__)
 
 @app.route("/emotionDetector")
 def sent_detector():
+    """Analyze text and return the detected emotions."""
 
     # Retrieve the text to analyze from the request arguments
     text_to_analyze = request.args.get('textToAnalyze')
@@ -29,19 +32,14 @@ def sent_detector():
 
     # Return the formatted response
     return (
-        "For the given statement, the system response is "
-        "'anger': {}, 'disgust': {}, 'fear': {}, 'joy': {} "
-        "and 'sadness': {}. The dominant emotion is {}."
-        .format(
-            anger_score,
-            disgust_score,
-            fear_score,
-            joy_score,
-            sadness_score,
-            dominant_emotion
-        )
+        f"For the given statement, the system response is "
+        f"'anger': {anger_score}, 'disgust': {disgust_score}, "
+        f"'fear': {fear_score}, 'joy': {joy_score} "
+        f"and 'sadness': {sadness_score}. "
+        f"The dominant emotion is {dominant_emotion}."
     )
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+    
